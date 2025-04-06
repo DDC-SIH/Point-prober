@@ -1,0 +1,38 @@
+# Test with point near the center of the image
+curl -X POST -H "Content-Type: application/json" -d "{\"lon\": 86.3976, \"lat\": 24.9879, \"bands\": [1, 2, 3], \"date\": \"2023-01-01\"}" http://127.0.0.1:5000/probe
+
+# Alternative test with a different point in the covered region
+curl -X POST -H "Content-Type: application/json" -d "{\"lon\": 80.5, \"lat\": 25.1, \"bands\": [1, 2, 3], \"date\": \"2023-01-01\"}" http://127.0.0.1:5000/probe
+
+# Test with all bands explicitly specified
+curl -X POST -H "Content-Type: application/json" -d "{\"lon\": 86.3976, \"lat\": 24.9879, \"bands\": [1, 2, 3], \"date\": \"2023-01-01\"}" http://127.0.0.1:5000/probe
+
+# Test with a specific band
+curl -X POST -H "Content-Type: application/json" -d "{\"lon\": 86.3976, \"lat\": 24.9879, \"bands\": [1], \"date\": \"2023-01-01\"}" http://127.0.0.1:5000/probe
+
+# Option 1: Rename your file to follow the app's naming convention
+# Move your file to the data directory:
+# copy test_lowrange_semitrans1.tif data\01JAN2023_L1C_ASIA_MER_V01R00.tif
+
+# Then test with this curl command:
+curl -X POST -H "Content-Type: application/json" -d "{\"lon\": 86.3976, \"lat\": 24.9879, \"bands\": [1, 2, 3], \"date\": \"2023-01-01\"}" http://127.0.0.1:5000/probe
+
+# Option 2: Modify appworking.py to use a specific file
+# Add this line before line 44:
+#     files = [os.path.abspath("test_lowrange_semitrans1.tif")]
+# And comment out lines 44-50 that set the files variable
+
+# PowerShell command to test:
+curl -X POST -H "Content-Type: application/json" -d "{\"lon\": 86.3976, \"lat\": 24.9879, \"bands\": [1, 2, 3], \"date\": \"2023-01-01\"}" http://127.0.0.1:5000/probe
+
+# Test with the specific file using the new test_file parameter
+curl -X POST -H "Content-Type: application/json" -d "{\"lon\": 86.3976, \"lat\": 24.9879, \"bands\": [1, 2, 3], \"test_file\": \"test_lowrange_semitrans1.tif\"}" http://127.0.0.1:5000/probe
+
+# Alternative - specify different coordinates 
+curl -X POST -H "Content-Type: application/json" -d "{\"lon\": 80.5, \"lat\": 25.1, \"bands\": [1, 2, 3], \"test_file\": \"test_lowrange_semitrans1.tif\"}" http://127.0.0.1:5000/probe
+
+# Test with only the first band
+curl -X POST -H "Content-Type: application/json" -d "{\"lon\": 86.3976, \"lat\": 24.9879, \"bands\": [1], \"test_file\": \"test_lowrange_semitrans1.tif\"}" http://127.0.0.1:5000/probe
+
+# Test with all bands (default)
+curl -X POST -H "Content-Type: application/json" -d "{\"lon\": 86.3976, \"lat\": 24.9879, \"test_file\": \"test_lowrange_semitrans1.tif\"}" http://127.0.0.1:5000/probe 
